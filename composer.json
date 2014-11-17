@@ -1,0 +1,10 @@
+{
+    "require": {
+        "mikecao/flight": "*",
+        "catfan/medoo": "*",
+        "doctrine/cache": "*",
+        "apix/log": "*",
+        "curl/curl": "*"
+    }
+}
+
