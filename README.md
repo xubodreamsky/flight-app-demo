@@ -33,7 +33,7 @@ composer install
 # 导入测试数据到数据库
 mysql -u root -p -h localhost demo < ./shell/demo.sql
 # 修改目录权限
-# chmod 777 ./app/storage
+chmod 777 ./app/storage
 ```
 
 ## web服务器配置
