@@ -22,20 +22,30 @@ Flight框架示例应用
 
 ## 初始化说明
 
-* 初始化第三方库：`cd [app-root-dir] && composer install`
-* 导入数据到mysql数据库：`shell/demo.sql`
-* 修改`app/storage`目录权限为`0777`
-* 配置ngnix/apache，请参考官网安装说明：<http://flightphp.com/install>
+```
+cd /var/www
+# 创建项目
+git clone https://github.com/wwb-dev/flight-app-demo ./demo
+cd ./demo
+composer install
+# 也可以用composer创建项目
+# composer create-project wuwenbin/flight-app-demo ./demo dev-master
+# 导入测试数据到数据库
+mysql -u root -p -h localhost demo < ./shell/demo.sql
+# 修改目录权限
+# chmod 777 ./app/storage
+```
 
-## nginx配置示例
+## web服务器配置
+
+ngnix/apache配置请参考官网安装说明：<http://flightphp.com/install>
 
 ```
+# nginx配置示例
 server {
     listen 80;
-    root /var/www/flight-app-demo/public;
+    root /var/www/demo;
     index index.php index.html index.htm;
-    error_log off;
-    access_log off;
 
     location / {
         try_files $uri $uri/ /index.php;
