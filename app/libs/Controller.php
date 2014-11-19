@@ -29,6 +29,8 @@ class Controller {
         if(Flight::request()->method == "POST") {
             Flight::log("post-".date("Ymd"))->info(print_r($_POST, TRUE));
         }
+
+        self::initRoute();
     }
 
     public static function stripslashesDeep($data) {
@@ -170,6 +172,18 @@ class Controller {
         }
 
         return self::$_modelInstances[$class];
+    }
+
+    public static function initRoute() {
+        $routes = Flight::get("flight.routes");
+        if(is_array($routes)) {
+            foreach($routes as $route) {
+                $pattern = $route[0];
+                $class = str_replace("/", "\\", $route[1]);
+                $func = "@".$route[2];
+                Flight::route($pattern, array($class, $func));
+            }
+        }
     }
 
     public static function __callStatic($name, $arguments) {
