@@ -7,7 +7,7 @@
 <?php endif; ?>
 <script type="text/javascript">
 $("#login").click(function() {
-    location.href = "/user/login";
+    location.href = "<?php echo Flight::url("front/User:login"); ?>";
 });
 
 $("#logout").click(function() {
@@ -20,7 +20,7 @@ $("#logout").click(function() {
 
     var _data = {};
 
-    $.post("/user/logout", _data, function(r) {
+    $.post("<?php echo Flight::url("front/User:logout"); ?>", _data, function(r) {
         alert(r.msg);
         if(r.status) {
             location.reload();

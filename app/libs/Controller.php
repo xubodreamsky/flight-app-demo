@@ -6,6 +6,7 @@ class Controller {
     protected static $_logInstances = array();
     protected static $_controllerInstances = array();
     protected static $_modelInstances = array();
+    protected static $_routes = array();
 
     public static function init() {
         date_default_timezone_set("Asia/Shanghai");
@@ -25,6 +26,7 @@ class Controller {
         Flight::map("returnJson", array(__CLASS__, "returnJson"));
         Flight::map("controller", array(__CLASS__, "getController"));
         Flight::map("model", array(__CLASS__, "getModel"));
+        Flight::map("url", array(__CLASS__, "url"));
 
         if(Flight::request()->method == "POST") {
             Flight::log("post-".date("Ymd"))->info(print_r($_POST, TRUE));
@@ -178,11 +180,27 @@ class Controller {
         $routes = Flight::get("flight.routes");
         if(is_array($routes)) {
             foreach($routes as $route) {
+                self::$_routes[$route[1]] = $route[0];
+                $tmp = explode(":", $route[1]);
+                $class = "\\".trim(str_replace("/", "\\", $tmp[0]), "\\")."Controller";
+                $func = "@".$tmp[1];
                 $pattern = $route[0];
-                $class = str_replace("/", "\\", $route[1]);
-                $func = "@".$route[2];
                 Flight::route($pattern, array($class, $func));
             }
+        }
+    }
+
+    public static function url($name, array $params = array()) {
+        if(!isset(self::$_routes[$name])) {
+            return "/";
+        } else {
+            $url = self::$_routes[$name];
+            foreach($params as $k => $v) {
+                if(preg_match("/^\w+$/", $v)) {
+                    $url = preg_replace("#@($k)(:([^/\(\)]*))?#", $v, $url);
+                }
+            }
+            return $url;
         }
     }
 

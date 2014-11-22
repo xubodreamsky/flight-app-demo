@@ -5,13 +5,13 @@ return array(
     "flight.views.path" => dirname(__DIR__)."/views",
     "flight.libs.path" => dirname(__DIR__)."/libs",
     "flight.routes" => array(
-        array("/", "/front/MainController", "index"),
-        array("/user/login", "/front/UserController", "login"),
-        array("/user/logout", "/front/UserController", "logout"),
-        array("/api/v1/token/auth", "/api/TokenController", "auth"),
-        array("/api/v1/token/refresh", "/api/TokenController", "refresh"),
-        array("/api/v1/token/check", "/api/TokenController", "check"),
-        array("/api/v1/token/revoke", "/api/TokenController", "revoke")
+        array("/", "front/Main:index"),
+        array("/user/login", "front/User:login"),
+        array("/user/logout", "front/User:logout"),
+        array("/api/v1/token/auth", "api/Token:auth"),
+        array("/api/v1/token/refresh", "api/Token:refresh"),
+        array("/api/v1/token/check", "api/Token:check"),
+        array("/api/v1/token/revoke", "api/Token:revoke")
     ),
     "db.host" => "localhost",
     "db.port" => 3306,
