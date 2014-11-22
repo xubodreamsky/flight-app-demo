@@ -25,7 +25,7 @@ $("#logout").click(function() {
         if(r.status) {
             location.reload();
         } else {
-            _data.data("lock", 0);
+            _this.data("lock", 0);
         }
     }, "json");
 });
